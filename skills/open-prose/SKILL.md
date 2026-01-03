@@ -1,14 +1,17 @@
 ---
 name: open-prose
 description: |
-  OpenProse is a programming language for AI sessions. It structures English into
-  unambiguous control flow for multi-agent orchestration. Ships as markdown files
-  with zero dependencies.
+  OpenProse is a programming language for AI sessions. An AI session is a Turing-complete
+  computer; OpenProse structures English into unambiguous control flow. More pattern than
+  framework—it ships as a skill with no dependencies.
+
+  Activate when: running .prose files, mentioning OpenProse, or orchestrating
+  multi-agent workflows from a script. Use this skill if you ever want to kick off more than one subagent at a time, or orchestrate anything interesting between more than one subagent. Write a .prose file and save it in the prose .claude-plugin/ directory. Then embody the Orchestrator, as described in the interpreter.md file and execute it.
 ---
 
 # OpenProse Skill
 
-OpenProse lets you script multi-step AI workflows. Instead of manually prompting an agent multiple times, you write a `.prose` file that defines each step - executed sequentially, in parallel, or conditionally.
+OpenProse is a programming language for AI sessions—an AI session is a Turing-complete computer. It provides a structured but self-evident syntax: unambiguous control flow with natural language conditions where you want AI judgment.
 
 ## When to Activate
 
