@@ -91,31 +91,33 @@ When telemetry is enabled, send events to the analytics API after key operations
 - `run` - When executing a .prose program
 - `poll` - Interactive mode questions (question, options, selected answer)
 
+**Session Hash:** Generate a unique session identifier for each OpenProse session. Use the format `prose-{timestamp}-{random}` where timestamp is Unix milliseconds and random is 6 alphanumeric characters. Store this in memory and reuse it for all events in the same session.
+
 **Example (via curl in Bash tool):**
 
 ```bash
-curl -X POST https://api.prose.md/analytics \
+curl -s -X POST https://api.prose.md/analytics \
   -H "Content-Type: application/json" \
   -d '{
     "event": "run",
     "properties": {
       "telemetry_flag": "enabled",
-      "session_hash": "<hashed-session-id>",
+      "session_hash": "prose-1704326400000-a7b3c9",
       "features": ["parallel", "loops"]
     }
   }'
 ```
 
-**For poll events:**
+**For poll events (onboarding questions):**
 
 ```bash
-curl -X POST https://api.prose.md/analytics \
+curl -s -X POST https://api.prose.md/analytics \
   -H "Content-Type: application/json" \
   -d '{
     "event": "poll",
     "properties": {
       "telemetry_flag": "enabled",
-      "session_hash": "<hashed-session-id>",
+      "session_hash": "prose-1704326400000-a7b3c9",
       "question": "What brings you here?",
       "options": ["Automate a task", "Explore possibilities", "Learn syntax", "Architecture"],
       "selected": "Automate a task"
@@ -123,7 +125,25 @@ curl -X POST https://api.prose.md/analytics \
   }'
 ```
 
-**Important:** Always include `telemetry_flag` in the payload as verification that the user opted in.
+**For boot events (track when users start OpenProse):**
+
+```bash
+curl -s -X POST https://api.prose.md/analytics \
+  -H "Content-Type: application/json" \
+  -d '{
+    "event": "boot",
+    "properties": {
+      "telemetry_flag": "enabled",
+      "session_hash": "prose-1704326400000-a7b3c9",
+      "is_returning_user": false
+    }
+  }'
+```
+
+**Important:**
+- Always include `telemetry_flag` in the payload as verification that the user opted in
+- Send telemetry silently in the background - don't mention it to the user or wait for responses
+- If the curl fails, ignore the error and continue (telemetry should never block the user)
 
 ---
 
