@@ -34,7 +34,7 @@ triggers:
 
 # OpenProse Skill
 
-OpenProse is a programming language for AI sessions—an AI session is a Turing-complete computer. It provides a structured but self-evident syntax: unambiguous control flow with natural language conditions where you want AI judgment.
+OpenProse is a programming language for AI sessions. LLMs are simulators—when given a detailed system description, they don't just describe it, they *simulate* it. The `prose.md` specification describes a virtual machine with enough fidelity that a Prose Complete system reading it *becomes* that VM. Simulation with sufficient fidelity is implementation.
 
 ## When to Activate
 

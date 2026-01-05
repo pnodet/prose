@@ -60,7 +60,7 @@ The `**...**` syntax lets you speak directly to the OpenProse VM. It evaluates t
 
 ### 3. Open Standard, Zero Lock-in
 
-OpenProse is a skill you import into Claude Code, OpenCode, Codex, Amp, or any compatible AI assistant. It's not a library you're locked into—it's a language specification.
+OpenProse runs on any **Prose Complete** system—a model + harness combination capable of inducing the VM. Currently: Claude Code + Opus, OpenCode + Opus, Amp + Opus. It's not a library you're locked into—it's a language specification.
 
 Switch platforms anytime. Your `.prose` files work everywhere.
 
@@ -123,7 +123,11 @@ Start with `01-hello-world.prose` or `03-code-review.prose`.
 
 ### The OpenProse VM
 
-The OpenProse VM is an AI session that acts as an intelligent runtime:
+LLMs are simulators. When given a detailed system description, they don't just describe it—they *simulate* it. The OpenProse specification (`prose.md`) describes a virtual machine with enough fidelity that a Prose Complete system reading it *becomes* that VM.
+
+This isn't metaphor: each `session` triggers a real subagent, outputs are real artifacts, and state persists in conversation history or files. Simulation with sufficient fidelity is implementation.
+
+The VM maps traditional components to emergent structures:
 
 | Aspect | Behavior |
 |--------|----------|
