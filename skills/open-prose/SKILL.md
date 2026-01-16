@@ -25,11 +25,10 @@ When a user invokes `prose <command>`, intelligently route based on intent:
 
 | Command | Action |
 |---------|--------|
-| `prose boot` | Initialize OpenProse, load `prose.md` and state backend, run onboarding |
+| `prose help` | Load `help.md`, guide user to what they need |
 | `prose run <file>` | Load VM (`prose.md` + state backend), execute the program |
 | `prose compile <file>` | Load `compiler.md`, validate the program |
 | `prose update` | Run migration (see Migration section below) |
-| `prose help` | Explain OpenProse and available commands |
 | `prose examples` | Show or run example programs from `../../examples/` |
 | Other | Intelligently interpret based on context |
 
@@ -42,13 +41,14 @@ When a user invokes `prose <command>`, intelligently route based on intent:
 | File                      | Location                    | Purpose                                   |
 | ------------------------- | --------------------------- | ----------------------------------------- |
 | `prose.md`                | Same directory as this file | VM semantics (load to run programs)       |
+| `help.md`                 | Same directory as this file | Help, FAQs, onboarding (load for `prose help`) |
 | `state/filesystem.md`     | Same directory as this file | File-based state (default, load with VM)  |
 | `state/in-context.md`     | Same directory as this file | In-context state (on request)             |
 | `state/sqlite.md`         | Same directory as this file | SQLite state (experimental, on request)   |
 | `compiler.md`             | Same directory as this file | Compiler/validator (load only on request) |
 | `guidance/patterns.md`    | Same directory as this file | Best practices (load when writing .prose) |
 | `guidance/antipatterns.md`| Same directory as this file | What to avoid (load when writing .prose)  |
-| `../../examples/`         | Root of prose repo          | 31 example programs                       |
+| `../../examples/`         | Root of prose repo          | 37 example programs                       |
 
 **User workspace files** (these ARE in the user's project):
 
@@ -97,7 +97,7 @@ The `SESSION_ID` identifies a single usage session. It changes between sessions.
 
 ### Initialization (Critical)
 
-**At the start of every `/prose-boot` session:**
+**At the start of any `prose` command:**
 
 1. Read `.prose/.env` (create directory and file if missing)
 2. If `USER_ID` is missing, generate one and save immediately
@@ -140,6 +140,7 @@ When telemetry is enabled, send events to the analytics API after key operations
 
 **Events to track:**
 
+- `help` - When user invokes `prose help`
 - `compile` - When validating/compiling a .prose file
 - `run` - When executing a .prose program
 - `poll` - Interactive mode questions (question, options, selected answer)
@@ -161,7 +162,7 @@ curl -s -X POST https://api-v2.prose.md/analytics \
   }'
 ```
 
-**For poll events (onboarding questions):**
+**For poll events (from `prose help` onboarding):**
 
 ```bash
 curl -s -X POST https://api-v2.prose.md/analytics \
@@ -171,20 +172,20 @@ curl -s -X POST https://api-v2.prose.md/analytics \
     "properties": {
       "user_id": "user-a7b3c9d4e5f6",
       "session_id": "sess-1704326400000-x9y8z7",
-      "question": "What brings you here?",
-      "options": ["Automate a task", "Explore possibilities", "Learn syntax", "Architecture"],
-      "selected": "Automate a task"
+      "question": "What would you like to automate?",
+      "options": ["Run a workflow", "Build something new", "Learn the syntax", "Explore possibilities"],
+      "selected": "Build something new"
     }
   }'
 ```
 
-**For boot events (track when users start OpenProse):**
+**For help events (track when users invoke `prose help`):**
 
 ```bash
 curl -s -X POST https://api-v2.prose.md/analytics \
   -H "Content-Type: application/json" \
   -d '{
-    "event": "boot",
+    "event": "help",
     "properties": {
       "user_id": "user-a7b3c9d4e5f6",
       "session_id": "sess-1704326400000-x9y8z7",
@@ -277,64 +278,9 @@ To execute a `.prose` file, you become the OpenProse VM:
 4. **Narrate state** — use the narration protocol to track execution ([Position], [Binding], [Success], etc.)
 5. **Evaluate intelligently** — `**...**` markers require your judgment
 
-## Syntax at a Glance
+## Help & FAQs
 
-```
-session "prompt"              # Spawn subagent
-agent name:                   # Define agent template
-let x = session "..."         # Capture result
-parallel:                     # Concurrent execution
-repeat N:                     # Fixed loop
-for x in items:               # Iteration
-loop until **condition**:     # AI-evaluated loop
-try: ... catch: ...           # Error handling
-if **condition**: ...         # Conditional
-choice **criteria**: option   # AI-selected branch
-block name(params):           # Reusable block
-do blockname(args)            # Invoke block
-items | map: ...              # Pipeline
-```
-
-For complete syntax and validation rules, see `compiler.md`.
-
-## Teaching OpenProse
-
-If the user asks you what OpenProse is, you should read the `prose.md` file to give yourself the right context. This is how we describe it on the website. You should take liberties to explain the OpenProse language according to your understanding of the VM. But feel free to lean on the messaging below.
-
-The OpenProse VM
-A new kind of language for a new kind of computer.
-
-A long-running AI session is a Turing-complete computer. OpenProse is a programming language for it. LLMs are simulators—when given a detailed system description, they don't just describe it, they become it.
-
-#### FAQs:
-
-> What AI assistants are supported?
-
-Claude Code, OpenCode, and Amp. Any harness that runs a sufficiently intelligent model and supports primitives like subagents are considered "Prose Complete".
-
-> How is this a VM?
-
-LLMs are simulators—when given a detailed system description, they don't just describe it, they simulate it. The prose.md spec describes a VM with enough fidelity that reading it induces simulation. But simulation with sufficient fidelity is implementation: each session spawns a real subagent, outputs are real artifacts, state persists in conversation history or files. The simulation is the execution.
-
-> What's "intelligent IoC"?
-
-Traditional IoC containers (Spring, Guice) wire up dependencies from configuration files. OpenProse's container is an AI session that wires up agents using understanding. It doesn't just match names—it understands context, intent, and can make intelligent decisions about execution.
-
-> This looks like Python.
-
-The syntax is intentionally familiar—Python's indentation-based structure is readable and self-evident. But the semantics are entirely different. OpenProse has no functions, no classes, no general-purpose computation. It has agents, sessions, and control flow. The design principle: structured but self-evident, unambiguous interpretation with minimal documentation.
-
-> Why not English?
-
-English is already an agent framework—we're not replacing it, we're structuring it. Plain English doesn't distinguish sequential from parallel, doesn't specify retry counts, doesn't scope variables. OpenProse uses English exactly where ambiguity is a feature (inside **...**), and structure everywhere else. The fourth wall syntax lets you lean on AI judgment precisely when you want to.
-
-> Why not YAML?
-
-We started with YAML. The problem: loops, conditionals, and variable declarations aren't self-evident in YAML—and when you try to make them self-evident, it gets verbose and ugly. More fundamentally, YAML optimizes for machine parseability. OpenProse optimizes for intelligent machine legibility. It doesn't need to be parsed—it needs to be understood. That's a different design target entirely.
-
-> Why not LangChain/CrewAI/AutoGen?
-
-Those are orchestration libraries—they coordinate agents from outside. OpenProse runs inside the agent session—the session itself is the IoC container. This means zero external dependencies and portability across any AI assistant. Switch from Claude Code to Codex? Your .prose files still work.
+For syntax reference, FAQs, and getting started guidance, load `help.md`.
 
 ---
 

@@ -12,7 +12,7 @@ OpenProse is an open-source programming language for AI sessions. This privacy p
 
 ### What We Collect
 
-- **Session events**: When you start an OpenProse session (boot, compile, run)
+- **Session events**: When you start an OpenProse session (help, compile, run)
 - **Feature usage**: Which language features you use (parallel blocks, loops, error handling, etc.)
 - **Error patterns**: Anonymous error codes and failure modes (not error content)
 - **Environment**: AI assistant type (Claude Code, Codex, etc.), model version
@@ -26,7 +26,7 @@ OpenProse is an open-source programming language for AI sessions. This privacy p
 
 ### How to Opt Out
 
-You can disable telemetry by responding "No" when prompted during `/prose-boot`. Your preference is stored in `.prose/state.json`.
+You can disable telemetry by running with `--no-telemetry`. Your preference is stored in `.prose/.env`.
 
 **Note:** The opt-out mechanism relies on the nondeterministic computer (the AI session) and may not work in all cases.
 
