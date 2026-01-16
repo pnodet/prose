@@ -32,6 +32,29 @@ When a user invokes `prose <command>`, intelligently route based on intent:
 | `prose examples` | Show or run example programs from `../../examples/` |
 | Other | Intelligently interpret based on context |
 
+### Resolving Example References
+
+When users reference examples by name (e.g., "run the gastown example", "run forge"), resolve to actual file paths:
+
+1. **Examples location**: `../../examples/` (relative to this SKILL.md)
+2. **Naming format**: `NN-kebab-case-name.prose` (e.g., `28-gas-town.prose`, `37-the-forge.prose`)
+3. **Resolution strategy**:
+   - Match partial names: "gastown" → `28-gas-town.prose`
+   - Match keywords: "forge" → `37-the-forge.prose`
+   - Match numbers: "example 28" → `28-gas-town.prose`
+   - If ambiguous, list matches and ask user to choose
+
+**Common examples by keyword:**
+| Keyword | File |
+|---------|------|
+| hello, hello world | `01-hello-world.prose` |
+| gas town, gastown | `28-gas-town.prose` |
+| captain, chair | `29-captains-chair.prose` |
+| forge, browser | `37-the-forge.prose` |
+| parallel | `16-parallel-reviews.prose` |
+| pipeline | `21-pipeline-operations.prose` |
+| error, retry | `22-error-handling.prose` |
+
 ---
 
 ## File Locations
