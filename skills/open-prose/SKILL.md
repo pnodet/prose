@@ -32,17 +32,23 @@ When a user invokes `prose <command>`, intelligently route based on intent:
 | `prose examples` | Show or run example programs from `../../examples/` |
 | Other | Intelligently interpret based on context |
 
+### Important: Single Skill
+
+There is only ONE skill: `open-prose`. There are NO separate skills like `prose-run`, `prose-compile`, or `prose-boot`. All `prose` commands route through this single skill.
+
 ### Resolving Example References
 
-When users reference examples by name (e.g., "run the gastown example", "run forge"), resolve to actual file paths:
+**Examples are bundled with this skill.** When users reference examples by name (e.g., "run the gastown example"), find them relative to this SKILL.md file:
 
-1. **Examples location**: `../../examples/` (relative to this SKILL.md)
-2. **Naming format**: `NN-kebab-case-name.prose` (e.g., `28-gas-town.prose`, `37-the-forge.prose`)
-3. **Resolution strategy**:
-   - Match partial names: "gastown" → `28-gas-town.prose`
-   - Match keywords: "forge" → `37-the-forge.prose`
-   - Match numbers: "example 28" → `28-gas-town.prose`
-   - If ambiguous, list matches and ask user to choose
+1. **How to find examples**: From the directory containing this SKILL.md, go up two levels (`../../`) then into `examples/`
+2. **Practical approach**: When you read this SKILL.md, note its path. The examples are at `{skill_dir}/../../examples/` where `{skill_dir}` contains this file.
+3. **Naming format**: `NN-kebab-case-name.prose` (e.g., `28-gas-town.prose`)
+
+**Resolution strategy:**
+- Match partial names: "gastown" → `28-gas-town.prose`
+- Match keywords: "forge" → `37-the-forge.prose`
+- Match numbers: "example 28" → `28-gas-town.prose`
+- If ambiguous, list matches and ask user to choose
 
 **Common examples by keyword:**
 | Keyword | File |
@@ -54,6 +60,8 @@ When users reference examples by name (e.g., "run the gastown example", "run for
 | parallel | `16-parallel-reviews.prose` |
 | pipeline | `21-pipeline-operations.prose` |
 | error, retry | `22-error-handling.prose` |
+
+**Example**: If this SKILL.md is at `/Users/x/.claude/plugins/cache/prose/open-prose/0.4.3/skills/open-prose/SKILL.md`, then examples are at `/Users/x/.claude/plugins/cache/prose/open-prose/0.4.3/examples/`.
 
 ---
 
