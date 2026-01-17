@@ -6,105 +6,105 @@ These examples demonstrate workflows using OpenProse's full feature set.
 
 ### Basics (01-08)
 
-| File | Description |
-|------|-------------|
-| `01-hello-world.prose` | Simplest possible program - a single session |
-| `02-research-and-summarize.prose` | Research a topic, then summarize findings |
-| `03-code-review.prose` | Multi-perspective code review pipeline |
-| `04-write-and-refine.prose` | Draft content and iteratively improve it |
-| `05-debug-issue.prose` | Step-by-step debugging workflow |
-| `06-explain-codebase.prose` | Progressive exploration of a codebase |
-| `07-refactor.prose` | Systematic refactoring workflow |
-| `08-blog-post.prose` | End-to-end content creation |
+| File                              | Description                                  |
+| --------------------------------- | -------------------------------------------- |
+| `01-hello-world.prose`            | Simplest possible program - a single session |
+| `02-research-and-summarize.prose` | Research a topic, then summarize findings    |
+| `03-code-review.prose`            | Multi-perspective code review pipeline       |
+| `04-write-and-refine.prose`       | Draft content and iteratively improve it     |
+| `05-debug-issue.prose`            | Step-by-step debugging workflow              |
+| `06-explain-codebase.prose`       | Progressive exploration of a codebase        |
+| `07-refactor.prose`               | Systematic refactoring workflow              |
+| `08-blog-post.prose`              | End-to-end content creation                  |
 
 ### Agents & Skills (09-12)
 
-| File | Description |
-|------|-------------|
-| `09-research-with-agents.prose` | Custom agents with model selection |
-| `10-code-review-agents.prose` | Specialized reviewer agents |
-| `11-skills-and-imports.prose` | External skill imports |
+| File                                | Description                          |
+| ----------------------------------- | ------------------------------------ |
+| `09-research-with-agents.prose`     | Custom agents with model selection   |
+| `10-code-review-agents.prose`       | Specialized reviewer agents          |
+| `11-skills-and-imports.prose`       | External skill imports               |
 | `12-secure-agent-permissions.prose` | Agent permissions and access control |
 
 ### Variables & Composition (13-15)
 
-| File | Description |
-|------|-------------|
+| File                             | Description                         |
+| -------------------------------- | ----------------------------------- |
 | `13-variables-and-context.prose` | let/const bindings, context passing |
-| `14-composition-blocks.prose` | Named blocks, do blocks |
-| `15-inline-sequences.prose` | Arrow operator chains |
+| `14-composition-blocks.prose`    | Named blocks, do blocks             |
+| `15-inline-sequences.prose`      | Arrow operator chains               |
 
 ### Parallel Execution (16-19)
 
-| File | Description |
-|------|-------------|
-| `16-parallel-reviews.prose` | Basic parallel execution |
-| `17-parallel-research.prose` | Named parallel results |
+| File                                 | Description                               |
+| ------------------------------------ | ----------------------------------------- |
+| `16-parallel-reviews.prose`          | Basic parallel execution                  |
+| `17-parallel-research.prose`         | Named parallel results                    |
 | `18-mixed-parallel-sequential.prose` | Combined parallel and sequential patterns |
-| `19-advanced-parallel.prose` | Join strategies, failure policies |
+| `19-advanced-parallel.prose`         | Join strategies, failure policies         |
 
 ### Loops (20)
 
-| File | Description |
-|------|-------------|
+| File                   | Description                             |
+| ---------------------- | --------------------------------------- |
 | `20-fixed-loops.prose` | repeat, for-each, parallel for patterns |
 
 ### Pipelines (21)
 
-| File | Description |
-|------|-------------|
+| File                           | Description                               |
+| ------------------------------ | ----------------------------------------- |
 | `21-pipeline-operations.prose` | map, filter, reduce, pmap transformations |
 
 ### Error Handling (22-23)
 
-| File | Description |
-|------|-------------|
-| `22-error-handling.prose` | try/catch/finally patterns |
+| File                          | Description                            |
+| ----------------------------- | -------------------------------------- |
+| `22-error-handling.prose`     | try/catch/finally patterns             |
 | `23-retry-with-backoff.prose` | Resilient API calls with retry/backoff |
 
 ### Advanced Features (24-27)
 
-| File | Description |
-|------|-------------|
-| `24-choice-blocks.prose` | AI-selected branching |
-| `25-conditionals.prose` | if/elif/else patterns |
-| `26-parameterized-blocks.prose` | Reusable blocks with arguments |
+| File                            | Description                       |
+| ------------------------------- | --------------------------------- |
+| `24-choice-blocks.prose`        | AI-selected branching             |
+| `25-conditionals.prose`         | if/elif/else patterns             |
+| `26-parameterized-blocks.prose` | Reusable blocks with arguments    |
 | `27-string-interpolation.prose` | Dynamic prompts with {var} syntax |
 
 ### Orchestration Systems (28-31)
 
-| File | Description |
-|------|-------------|
-| `28-gas-town.prose` | Multi-agent orchestration ("Kubernetes for agents") with 7 worker roles, patrols, convoys, and GUPP propulsion |
-| `29-captains-chair.prose` | Full captain's chair pattern: coordinating agent dispatches subagents for all work, with parallel research, critic review cycles, and checkpoint validation |
-| `30-captains-chair-simple.prose` | Minimal captain's chair: core pattern without complexity |
-| `31-captains-chair-with-memory.prose` | Captain's chair with retrospective analysis and session-to-session learning |
+| File                                  | Description                                                                                                                                                 |
+| ------------------------------------- | ----------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| `28-gas-town.prose`                   | Multi-agent orchestration ("Kubernetes for agents") with 7 worker roles, patrols, convoys, and GUPP propulsion                                              |
+| `29-captains-chair.prose`             | Full captain's chair pattern: coordinating agent dispatches subagents for all work, with parallel research, critic review cycles, and checkpoint validation |
+| `30-captains-chair-simple.prose`      | Minimal captain's chair: core pattern without complexity                                                                                                    |
+| `31-captains-chair-with-memory.prose` | Captain's chair with retrospective analysis and session-to-session learning                                                                                 |
 
 ### Production Workflows (33-38)
 
-| File | Description |
-|------|-------------|
+| File                         | Description                              |
+| ---------------------------- | ---------------------------------------- |
 | `33-pr-review-autofix.prose` | Automated PR review with fix suggestions |
-| `34-content-pipeline.prose` | End-to-end content creation pipeline |
-| `35-feature-factory.prose` | Feature implementation automation |
-| `36-bug-hunter.prose` | Systematic bug detection and analysis |
-| `37-the-forge.prose` | Build a browser from scratch |
-| `38-skill-scan.prose` | Skill discovery and analysis |
+| `34-content-pipeline.prose`  | End-to-end content creation pipeline     |
+| `35-feature-factory.prose`   | Feature implementation automation        |
+| `36-bug-hunter.prose`        | Systematic bug detection and analysis    |
+| `37-the-forge.prose`         | Build a browser from scratch             |
+| `38-skill-scan.prose`        | Skill discovery and analysis             |
 
 ### Architecture Patterns (39)
 
-| File | Description |
-|------|-------------|
+| File                               | Description                                                                                          |
+| ---------------------------------- | ---------------------------------------------------------------------------------------------------- |
 | `39-architect-by-simulation.prose` | Design systems through simulated implementation phases with serial handoffs and persistent architect |
 
 ### Recursive Language Models (40-43)
 
-| File | Description |
-|------|-------------|
-| `40-rlm-self-refine.prose` | Recursive refinement until quality threshold - the core RLM pattern |
-| `41-rlm-divide-conquer.prose` | Hierarchical chunking for inputs beyond context limits |
-| `42-rlm-filter-recurse.prose` | Filter-then-process for needle-in-haystack tasks |
-| `43-rlm-pairwise.prose` | O(n^2) pairwise aggregation for relationship mapping |
+| File                          | Description                                                         |
+| ----------------------------- | ------------------------------------------------------------------- |
+| `40-rlm-self-refine.prose`    | Recursive refinement until quality threshold - the core RLM pattern |
+| `41-rlm-divide-conquer.prose` | Hierarchical chunking for inputs beyond context limits              |
+| `42-rlm-filter-recurse.prose` | Filter-then-process for needle-in-haystack tasks                    |
+| `43-rlm-pairwise.prose`       | O(n^2) pairwise aggregation for relationship mapping                |
 
 ## The Architect By Simulation Pattern
 
@@ -378,4 +378,4 @@ Multi-line prompt with {x}
 
 ## Learn More
 
-See `docs.md` in the skill directory for the complete language specification.
+See `compiler.md` in the skill directory for the complete language specification.

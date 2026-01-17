@@ -5,7 +5,7 @@ argument-hint: <file.prose>
 
 Compile and validate the OpenProse program at: $ARGUMENTS
 
-Use the docs.md specification as your compiler and validator:
+Use the compiler.md specification as your compiler and validator:
 
 1. **Parse** the program according to the syntax grammar
 2. **Validate** that the program is well-formed:

@@ -5,7 +5,7 @@ summary: |
   Read this file to identify and fix problematic code patterns.
 see-also:
   - prose.md: Execution semantics, how to run programs
-  - docs.md: Full syntax grammar, validation rules
+  - compiler.md: Full syntax grammar, validation rules
   - patterns.md: Recommended design patterns
 ---
 
