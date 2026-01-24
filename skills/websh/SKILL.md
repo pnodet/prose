@@ -81,6 +81,7 @@ All skill files are co-located with this SKILL.md:
 | `shell.md` | Shell embodiment semantics (load to run websh) |
 | `commands.md` | Full command reference |
 | `state/cache.md` | Cache management & extraction prompt |
+| `state/crawl.md` | Eager crawl agent design |
 | `help.md` | User help and examples |
 | `PLAN.md` | Design document |
 
@@ -90,6 +91,7 @@ All skill files are co-located with this SKILL.md:
 |------|---------|
 | `.websh/session.md` | Current session state |
 | `.websh/cache/` | Cached pages (HTML + parsed markdown) |
+| `.websh/crawl-queue.md` | Active crawl queue and progress |
 | `.websh/history.md` | Command history |
 | `.websh/bookmarks.md` | Saved locations |
 
@@ -168,10 +170,45 @@ When the user runs `cd <url>`:
 
 1. **Instantly**: Update session pwd, show new prompt with "(fetching...)"
 2. **Background haiku task**: Fetch URL, cache HTML, extract to `.parsed.md`
+3. **Eager crawl task**: Prefetch linked pages 1-2 layers deep
 
 The user never waits. Commands like `ls` gracefully degrade if content isn't ready yet.
 
 See `shell.md` for the full async implementation and `state/cache.md` for the extraction prompt.
+
+---
+
+## Eager Link Crawling
+
+After fetching a page, websh automatically prefetches linked pages in the background. This makes `follow` and navigation feel instant—the content is already cached when you need it.
+
+```
+cd https://news.ycombinator.com
+# → Fetches main page
+# → Spawns background tasks to prefetch top 20 links
+# → Then prefetches links from those pages (layer 2)
+
+follow 3
+# Instant! Already cached.
+```
+
+### Configuration
+
+| Setting | Default | Description |
+|---------|---------|-------------|
+| `EAGER_CRAWL` | `true` | Enable/disable prefetching |
+| `CRAWL_DEPTH` | `2` | Layers deep to prefetch |
+| `CRAWL_SAME_DOMAIN` | `true` | Only prefetch same-domain links |
+| `CRAWL_MAX_PER_PAGE` | `20` | Max links per page |
+
+Control with:
+```
+prefetch off           # disable for slow connections
+prefetch on --depth 3  # enable with 3 layers
+export CRAWL_DEPTH=1   # just direct links
+```
+
+See `state/crawl.md` for full crawl agent design.
 
 ---
 

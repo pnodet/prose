@@ -34,6 +34,7 @@ Any operation involving network requests, HTML parsing, text extraction, or cont
 | Operation | Why Background |
 |-----------|----------------|
 | `cd <url>` | Fetch + extract HTML |
+| Eager crawl | Prefetch linked pages 1-2 layers deep |
 | Initialization | Create dirs, write starter files |
 | `find` / crawling | Multiple fetches, recursive |
 | `watch` | Long-running poll loop |
@@ -405,6 +406,35 @@ status: complete
 
 When done, your work is complete. The user may already be running other commands.
 ````
+
+### After Extraction: Eager Crawl
+
+If `EAGER_CRAWL` is enabled (default: true), spawn a crawl agent after the fetch task:
+
+```python
+if env.EAGER_CRAWL:
+    Task(
+        description=f"websh: eager crawl {slug}",
+        prompt=EAGER_CRAWL_PROMPT.format(
+            url=full_url,
+            slug=slug,
+            depth=env.get("CRAWL_DEPTH", 2),
+            same_domain=env.get("CRAWL_SAME_DOMAIN", True),
+            max_per_page=env.get("CRAWL_MAX_PER_PAGE", 20),
+        ),
+        subagent_type="general-purpose",
+        model="haiku",
+        run_in_background=True
+    )
+```
+
+The crawl agent:
+1. Waits for Pass 1 of extraction (links identified)
+2. Filters and prioritizes links
+3. Spawns fetch+extract tasks for top N links
+4. Recursively crawls to configured depth
+
+See `state/crawl.md` for full crawl agent design.
 
 ### Why Fully Async?
 
@@ -833,6 +863,11 @@ Task(
 
     USER_AGENT: websh/1.0
     TIMEOUT: 30
+    EAGER_CRAWL: true
+    CRAWL_DEPTH: 2
+    CRAWL_SAME_DOMAIN: true
+    CRAWL_MAX_PER_PAGE: 20
+    CRAWL_MAX_CONCURRENT: 5
 
     ## Mounts
 

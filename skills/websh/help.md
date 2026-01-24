@@ -71,6 +71,17 @@ Add your own with `bookmark <name>`.
 | `source` | View raw HTML |
 | `dom` | Show DOM tree |
 
+### Prefetching
+
+| Command | Description |
+|---------|-------------|
+| `prefetch` | Show crawl status |
+| `prefetch on/off` | Enable/disable eager crawl |
+| `prefetch <url>` | Manually prefetch a URL |
+| `prefetch --depth <n>` | Set prefetch depth |
+| `crawl <url>` | Explicit deep crawl |
+| `queue` | Show crawl queue |
+
 ### Search & Discovery
 
 | Command | Description |
@@ -317,6 +328,22 @@ locate -i "OAuth" --urls
 # Case-insensitive, show URLs
 ```
 
+### Prefetching for instant navigation
+
+```
+cd https://news.ycombinator.com
+# Automatically prefetches visible links in background
+
+prefetch
+# Check prefetch progress
+
+follow 3
+# Instant! Already cached.
+
+prefetch off
+# Disable for slow connections
+```
+
 ### Archive research
 
 ```
@@ -393,6 +420,7 @@ Just say what you want. websh will figure it out.
 
 ## Tips
 
+- **Instant navigation**: Links are prefetched automatically—`follow` is usually instant
 - **Use indexes**: `ls` numbers links, `follow 3` clicks the 4th
 - **Pipe everything**: `ls | grep "foo" | head 5 | tee results.txt`
 - **Background long tasks**: `cd https://slow-site.com &`
@@ -400,6 +428,7 @@ Just say what you want. websh will figure it out.
 - **Mount APIs**: `mount` makes REST APIs navigable like directories
 - **Compare over time**: `snapshot` + `diff --snapshot`
 - **Schedule checks**: `cron` for recurring, `at` for one-time
+- **Control prefetch**: `prefetch off` for slow connections, `prefetch` to check progress
 
 ---
 

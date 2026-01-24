@@ -7,6 +7,7 @@ summary: |
 see-also:
   - ../shell.md: Shell semantics
   - ../commands.md: Command reference
+  - crawl.md: Eager crawl agent
 ---
 
 # websh Cache Management

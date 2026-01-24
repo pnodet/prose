@@ -402,6 +402,97 @@ html
 
 ---
 
+## Prefetching & Crawling
+
+### `prefetch`
+
+Control eager link crawling. By default, websh automatically prefetches visible links 1-2 layers deep in the background after you navigate to a page.
+
+**Syntax:**
+```
+prefetch                     # show status
+prefetch on                  # enable eager crawl
+prefetch off                 # disable eager crawl
+prefetch <url>               # manually prefetch a URL
+prefetch --depth <n>         # set crawl depth (default: 2)
+prefetch --stop              # stop current crawl
+```
+
+**Examples:**
+```
+prefetch                     # check crawl progress
+prefetch off                 # disable for slow connections
+prefetch https://example.com # manually queue URL
+```
+
+**Status output:**
+```
+Eager crawl: enabled
+Depth: 2, Same domain: yes, Max per page: 20
+
+Current crawl:
+  Origin: https://news.ycombinator.com
+  Progress: Layer 1 - 15/20 complete
+  Queued: 42 URLs for Layer 2
+```
+
+---
+
+### `crawl`
+
+Explicitly crawl a URL to a specified depth.
+
+**Syntax:**
+```
+crawl <url>                  # crawl from URL
+crawl --depth <n>            # depth (default: 2)
+crawl --all                  # include external links
+crawl --follow <pattern>     # only follow matching URLs
+crawl --max <n>              # max pages to fetch
+```
+
+**Examples:**
+```
+crawl https://docs.example.com --depth 3
+crawl https://api.example.com --follow "/docs/*"
+crawl https://blog.com --max 50
+```
+
+**Difference from prefetch:**
+- `prefetch` is automatic and runs in background after `cd`
+- `crawl` is manual and can go deeper / wider
+
+---
+
+### `queue`
+
+Show the crawl queue.
+
+**Syntax:**
+```
+queue                        # show queue status
+queue -l                     # long format with all URLs
+queue --clear                # clear pending queue
+```
+
+**Output:**
+```
+In progress: 3
+  [→] https://hn.com/item?id=123 (extracting)
+  [→] https://hn.com/item?id=124 (fetching)
+  [→] https://hn.com/item?id=125 (fetching)
+
+Queued: 17
+  [0] https://hn.com/item?id=126 (depth 1)
+  [1] https://hn.com/item?id=127 (depth 1)
+  ...
+
+Completed: 12
+Skipped: 5 (external/cached)
+```
+
+---
+
 ## Search & Discovery
 
 ### `find <pattern>`
@@ -810,6 +901,16 @@ export TIMEOUT=60
 export HEADER_Authorization="Bearer mytoken"
 export COOKIE_session="abc123"
 export USER_AGENT="Mozilla/5.0..."
+```
+
+**Crawl settings:**
+```
+export EAGER_CRAWL=true              # enable/disable prefetching
+export CRAWL_DEPTH=2                 # layers deep to prefetch
+export CRAWL_SAME_DOMAIN=true        # only prefetch same-domain links
+export CRAWL_MAX_PER_PAGE=20         # max links per page
+export CRAWL_MAX_CONCURRENT=5        # parallel fetches
+export CRAWL_DELAY_MS=200            # rate limit delay
 ```
 
 ---
